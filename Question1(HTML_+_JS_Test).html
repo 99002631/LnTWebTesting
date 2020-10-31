@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Document</title>
     <style>
-        div{
-            display:inline-table;
+        div {
+            display: inline-table;
             border-radius: 2px;
             width: 48%;
             padding: 8px;
@@ -14,9 +15,9 @@
         }
     </style>
     <script>
-        class registration{
+        class registration {
             constructor(name, email, phone, billDate, billAmount) {
-               
+
                 this.name = name;
                 this.email = email;
                 this.phone = phone;
@@ -25,39 +26,75 @@
             }
         }
 
-        class registrationManager{
+        class registrationManager {
             constructor() {
                 this.registrations = [];
             }
 
-            addRegistration(ex){
+            addRegistration(ex) {
                 this.registrations.unshift(ex);
             }
 
-            getAllRegistrations(){
+            getAllRegistrations() {
                 return this.registrations;
             }
         }
         const mgr = new registrationManager();
-        function populateTable(all){
+
+        function populateTable(all) {
             const heading = "<tr><th>Name</th><th>Email</th><th>Phone</th><th>Date</th><th>Amount</th></tr>";
             document.getElementById("registrationTable").innerHTML = heading;
             for (const ex of all) {
                 let row = "<td>" + ex.name + "</td>"
-                    row += "<td>" + ex.email + "</td>"
-                    row += "<td>" + ex.phone + "</td>"    
-                    row += "<td>" + ex.billDate + "</td>"    
-                    row += "<td>" + ex.billAmount + "</td></tr>"
-                document.getElementById("registrationTable").innerHTML += row;    
+                row += "<td>" + ex.email + "</td>"
+                row += "<td>" + ex.phone + "</td>"
+                row += "<td>" + ex.billDate + "</td>"
+                row += "<td>" + ex.billAmount + "</td></tr>"
+                document.getElementById("registrationTable").innerHTML += row;
             }
         }
-        function onAddCustomer(){
-        
+
+        function onAddCustomer() {
+
             const name = document.getElementById("name").value;
+
+            if (name == "") {
+                alert("Please provide your name!");
+                document.myForm.Name.focus();
+                return false;
+            }
+
             const email = document.getElementById("email").value;
+            atpos = email.indexOf("@");
+            dotpos = email.lastIndexOf(".");
+            if (atpos < 1 || (dotpos - atpos < 2 || email == "")) {
+                alert("Please enter correct email ID")
+                return false;
+            }
+
             const phone = document.getElementById("phone").value;
+
+            if (phone == "" || isNaN(phone) ||
+                phone.length != 10) {
+                alert("Please provide Valid Phone Number.");
+                return false;
+            }
+
             const billDate = new Date(document.getElementById("billDate").value);
+
+            if (billDate == "" || isNaN(billDate)) {
+                alert("Please provide Valid Amount.");
+                return false;
+            }
+
             const billAmount = document.getElementById("billAmount").value;
+
+            if (billAmount == "" || isNaN(billAmount)) {
+                alert("Please provide Valid Amount.");
+                return false;
+            }
+
+
             const ex = new registration(name, email, phone, billDate, billAmount);
             mgr.addRegistration(ex);
             alert("registration added to the database");
@@ -70,10 +107,11 @@
         }
     </script>
 </head>
+
 <body>
     <div>
         <h2>List of Registrations</h2>
-        <hr/>
+        <hr />
         <table border="1" id="registrationTable">
 
         </table>
@@ -89,4 +127,5 @@
         <button onclick="onAddCustomer()">Add Customer</button>
     </div>
 </body>
+
 </html>
