@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        div{
+            display:inline-table;
+            border-radius: 2px;
+            width: 48%;
+            padding: 8px;
+            margin: 3px;
+            vertical-align: top;
+            border: 3px solid rgb(255, 94, 1);
+        }
+    </style>
+    <script>
+        class registration{
+            constructor(name, email, phone, billDate, billAmount) {
+               
+                this.name = name;
+                this.email = email;
+                this.phone = phone;
+                this.billDate = billDate;
+                this.billAmount = billAmount;
+            }
+        }
+
+        class registrationManager{
+            constructor() {
+                this.registrations = [];
+            }
+
+            addRegistration(ex){
+                this.registrations.unshift(ex);
+            }
+
+            getAllRegistrations(){
+                return this.registrations;
+            }
+        }
+        const mgr = new registrationManager();
+        function populateTable(all){
+            const heading = "<tr><th>Name</th><th>Email</th><th>Phone</th><th>Date</th><th>Amount</th></tr>";
+            document.getElementById("registrationTable").innerHTML = heading;
+            for (const ex of all) {
+                let row = "<td>" + ex.name + "</td>"
+                    row += "<td>" + ex.email + "</td>"
+                    row += "<td>" + ex.phone + "</td>"    
+                    row += "<td>" + ex.billDate + "</td>"    
+                    row += "<td>" + ex.billAmount + "</td></tr>"
+                document.getElementById("registrationTable").innerHTML += row;    
+            }
+        }
+        function onAddCustomer(){
+        
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const billDate = new Date(document.getElementById("billDate").value);
+            const billAmount = document.getElementById("billAmount").value;
+            const ex = new registration(name, email, phone, billDate, billAmount);
+            mgr.addRegistration(ex);
+            alert("registration added to the database");
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("billDate").value = "";
+            document.getElementById("billAmount").value = "";
+            populateTable(mgr.getAllRegistrations());
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h2>List of Registrations</h2>
+        <hr/>
+        <table border="1" id="registrationTable">
+
+        </table>
+    </div>
+    <div>
+        <h2>New Registration</h2>
+        <hr>
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="email" id="email" placeholder="Enter Email">
+        <input type="number" id="phone" placeholder="Enter Phone Number">
+        <input type="date" id="billDate" placeholder="Enter Date">
+        <input type="number" id="billAmount" placeholder="Enter the Amount">
+        <button onclick="onAddCustomer()">Add Customer</button>
+    </div>
+</body>
+</html>
