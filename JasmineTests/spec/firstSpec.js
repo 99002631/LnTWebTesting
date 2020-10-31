@@ -62,6 +62,6 @@ describe("Suite to test classes", () => {
     it("should updatecustRecord", () => {
         const emp = new customer(123, "Aman Kumar Mishra", "mishra.amankumar@gmail.com", "31/10/2020",1200)
         mgr.updateCustomer(emp)
-        expect(mgr.customers).not.toContain(new customer(123, "Aman", "Homeless"));
+        expect(mgr.customers).not.toContain(new customer(123, "Aman", "mishra.amankumar@gmail.com"));
    });
 });
